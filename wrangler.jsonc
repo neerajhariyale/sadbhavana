@@ -1,0 +1,14 @@
+{
+  // Cloudflare Workers config for the OpenNext-built Next.js app.
+  // The build step (`opennextjs-cloudflare build`) outputs .open-next/worker.js
+  // and .open-next/assets, which `wrangler deploy` then ships.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "sadbhavana",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2025-03-25",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  }
+}
