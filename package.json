@@ -9,7 +9,8 @@
     "lint": "next lint",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
     "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
-    "cf-typegen": "wrangler types"
+    "cf-typegen": "wrangler types",
+    "postinstall": "if [ -n \"$WORKERS_CI$CF_PAGES$CI\" ]; then opennextjs-cloudflare build; fi"
   },
   "dependencies": {
     "next": "^16.2.9",

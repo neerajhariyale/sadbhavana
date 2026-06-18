@@ -60,6 +60,24 @@ To change it later, just overwrite those files (keep the names). A vector
 
 ## Deploy + get your store URLs
 
+### Cloudflare Workers (current setup)
+
+This site deploys to **Cloudflare Workers via OpenNext** (`@opennextjs/cloudflare`).
+Cloudflare runs `npm clean-install` and then `npx wrangler deploy`. Since the deploy
+command alone does not build, a `postinstall` script runs `opennextjs-cloudflare build`
+**in CI** (gated on `WORKERS_CI` / `CF_PAGES` / `CI`) so that `.open-next/` exists before
+`wrangler deploy` runs. Local `npm install` skips this and stays fast.
+
+- Cleaner alternative: in the Cloudflare dashboard set the **Build command** to
+  `npx opennextjs-cloudflare build` (Deploy command stays `npx wrangler deploy`). Then
+  the `postinstall` hook is redundant and can be removed.
+- Requires **Node 22+** (pinned in `.node-version`). Production build uses
+  `next build --webpack` — Next 16's default Turbopack build isn't yet compatible with
+  OpenNext, and images are served unoptimized (`next.config.mjs`).
+- Locally: `npm run preview` (build + local Workers preview) or `npm run deploy`.
+
+### Vercel (alternative)
+
 The easiest path is **Vercel** (free):
 
 1. Push this folder to a GitHub repo.
